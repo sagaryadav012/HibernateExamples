@@ -13,18 +13,33 @@ JPA :
 Java Persistence API (JPA) is a Java specification that provides certain functionality and standard to ORM tools. 
 The javax.persistence package contains the JPA classes and interfaces.
 
-SessionFactory :
-The SessionFactory is a factory of session and client of ConnectionProvider. 
-It holds second level cache (optional) of data. The org.hibernate.
-SessionFactory interface provides factory method to get the object of Session.
+What is a SessionFactory?
+SessionFactory provides an instance of Session. It is a factory class that gives the Session objects based on the configuration parameters in order to establish the connection to the database.
+As a good practice, the application generally has a single instance of SessionFactory. The internal state of a SessionFactory which includes metadata about ORM is immutable, i.e once the instance is created, it cannot be changed.
+This also provides the facility to get information like statistics and metadata related to a class, query executions, etc. It also holds second-level cache data if enabled.
 
-Session :
-The session object provides an interface between the application and data stored in the database. 
-It is a short-lived object and wraps the JDBC connection. 
-It is factory of Transaction, Query and Criteria. 
+
+
+What is a Session in Hibernate?
+A session is an object that maintains the connection between Java object application and database. Session also has methods for storing, retrieving, modifying or deleting data from database using methods like persist(), load(), get(), update(), delete(), etc. Additionally, It has factory methods to return Query, Criteria, and Transaction objects. 
 It holds a first-level cache (mandatory) of data. 
 The org.hibernate.Session interface provides methods to insert, update and delete the object. 
 It also provides factory methods for Transaction, Query and Criteria.
+
+
+What is the difference between first level cache and second level cache?
+Hibernate has 2 cache types. First level and second level cache for which the difference is given below:
+
+First Level Cache :
+1. This is local to the Session object and cannot be shared between multiple sessions.
+2. This cache is enabled by default and there is no way to disable it.	
+3. The first level cache is available only until the session is open, once the session is closed, the first level cache is destroyed.	
+
+Second Level Cache :
+1. This cache is maintained at the SessionFactory level and shared among all sessions in Hibernate.
+2. This is disabled by default, but we can enable it through configuration.
+3. The second-level cache is available through the application’s life cycle, it is only destroyed and recreated when an application is restarted.
+
 
 Transaction : 
 The transaction object specifies the atomic unit of work. It is optional. The org.hibernate.
